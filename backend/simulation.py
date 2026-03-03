@@ -173,13 +173,21 @@ class Simulacion:
             self.tipo_evento = TipoEvento.FIN
             return False
 
-        self.tipo_evento = self.proximo_evento(hora_prox)
+        # Avanzo el reloj al próximo instante donde ocurre algo
         self.reloj = hora_prox
 
-        if self.tipo_evento == TipoEvento.FIN_ENSAMBLE:
-            self.fin_ensamble()
-        elif self.tipo_evento == TipoEvento.FIN_HORNEADO:
-            self.fin_horneado()
+        # IMPORTANTE: procesar todos los eventos que ocurren en este mismo reloj
+        while True:
+            tipo = self.proximo_evento(self.reloj)
+            if tipo == TipoEvento.FIN:
+                break
+
+            self.tipo_evento = tipo
+
+            if tipo == TipoEvento.FIN_ENSAMBLE:
+                self.fin_ensamble()
+            elif tipo == TipoEvento.FIN_HORNEADO:
+                self.fin_horneado()
 
         return True
 

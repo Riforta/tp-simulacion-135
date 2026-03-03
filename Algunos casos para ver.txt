@@ -1,0 +1,6 @@
+Eventos que ocurren en el mismo instante:
+
+Semilla: 123
+Tiempo: 10000
+Cantidad de ensambladores: 4
+Fila numero: 1716 - tiempo: 8567.93. 
