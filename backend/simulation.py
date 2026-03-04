@@ -18,7 +18,6 @@ class SimConfig:
     horno_max: float = 10.0
 
     # Regla para empates entre FinHorneado y FinEnsamble en el mismo reloj
-    # "ensamble" mantiene tu comportamiento actual
     prioridad_empate: str = "ensamble"  # "ensamble" | "horno"
 
 
@@ -139,7 +138,7 @@ class Simulacion:
         self.ensambladores: List[Ensamblador] = []
         self.cola: int = 0
         self.tipo_evento: TipoEvento = TipoEvento.INICIO
-        self.tabla: List[Dict[str, Any]] = []
+        self.tabla: List[Dict[str, Any]] = [] # Se acumulan todas las finlas que despues react rederiza
 
         # Flags visuales del evento actual (para no arrastrar RND/Tiempo)
         self._ensambladores_con_nuevo_ensamble: set[int] = set()
@@ -176,7 +175,7 @@ class Simulacion:
         # Avanzo el reloj al próximo instante donde ocurre algo
         self.reloj = hora_prox
 
-        # IMPORTANTE: procesar todos los eventos que ocurren en este mismo reloj
+        # se procesan todos los eventos que ocurren en este mismo instante de reloj
         while True:
             tipo = self.proximo_evento(self.reloj)
             if tipo == TipoEvento.FIN:
